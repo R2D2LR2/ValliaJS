@@ -1,7 +1,6 @@
 const clockContainer = document.querySelector(".js-clock"),
-  clockTitle = clockContainer.querySelector(
-    "h1:first-child"
-  ); /* CSS 선택자를 이용한 검색 가능 */
+  clockTitle = clockContainer.querySelector("h1:nth-child(2)");
+/* CSS 선택자를 이용한 검색 가능 */
 
 function getTime() {
   const date = new Date();
