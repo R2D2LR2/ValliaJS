@@ -4,7 +4,8 @@ const toDoForm = document.querySelector(".js-toDoForm"),
 
 const TODOS_LS = "toDos";
 
-let toDos = [];
+let toDos = [],
+  idNumbers = 1; //id 중복현상 제거용
 
 function deleteToDo(event) {
   // console.log(event.target.parentNode);
@@ -27,7 +28,14 @@ function paintToDo(text) {
   const li = document.createElement("li"),
     delBtn = document.createElement("button"),
     span = document.createElement("span"),
-    newId = toDos.length + 1;
+    // newId = toDos.length + 1;
+    //id 중복현상 제거 todo list 전체 삭제 시 아이디 1번 부터 다시 부여
+    newId = idNumbers;
+  if (idNumbers === null) {
+    idNumbers = 1;
+  } else {
+    idNumbers++;
+  }
 
   const toDoObj = {
     text: text,
