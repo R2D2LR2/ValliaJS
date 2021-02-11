@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge" /> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        background-color: #ecf0f1;
+      }
+
+      h1 {
+        color: #34495e;
+        transition: color 0.5s ease-in-out;
+      }
+
+      .clicked {
+        color: #7f8c8d;
+      }
+
+      .btn {
+        cursor: pointer;
+      }
+    </style>
+    <title>#2.7 DOM if - else - Function practice Two</title>
+  </head>
+  <body>
+    <h1 id="title" class="btn">It Works!</h1>
+
+    <script>
+      const title = document.querySelector("#title");
+      const CLICKED_CLASS = "clicked";
+
+      function handleClick() {
+        title.classList.toggle(CLICKED_CLASS);
+      }
+
+      function init() {
+        document.addEventListener("click", handleClick);
+      }
+      init();
+    </script>
+  </body>
+</html>
