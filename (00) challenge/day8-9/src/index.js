@@ -3,43 +3,87 @@
 // <⚠️ /DONT DELETE THIS ⚠️>
 const toDoForm = document.querySelector(".js-toDoForm"),
   toDoInput = toDoForm.querySelector("input"),
-  toDoList = document.querySelector(".js-toDoList");
+  pendingList = document.querySelector(".js-pendingList"),
+  finishedList = document.querySelector(".js-finishedList");
 
 const TODOS_LS = "PENDING";
+const CHECK_LS = "FINISHED";
 
 let toDos = [];
+let chkToDos = [];
 
 function deleteToDo(event) {
   const btn = event.target;
   const li = btn.parentNode;
-  toDoList.removeChild(li);
+  pendingList.removeChild(li);
   const cleanToDos = toDos.filter(function (toDo) {
-    console.log(toDo.id, li.id);
-    console.log(toDo.id, parseInt(li.id));
     return toDo.id !== parseInt(li.id);
   });
-  console.log(cleanToDos);
   toDos = cleanToDos;
   saveToDos();
+}
+
+function movedToDo(event) {
+  const liId = event.target.parentNode.id;
+  const spanText = event.target.parentNode.firstChild.innerText;
+  // const li = btn.parentNode;
+
+  const li = document.createElement("li");
+  const delBtn = document.createElement("button");
+  const chkBtn = document.createElement("button");
+  const span = document.createElement("span");
+  // const newId = toDos.length + 1;
+  delBtn.innerText = "❌";
+  chkBtn.innerText = "❎";
+  delBtn.addEventListener("click", deleteToDo);
+  chkBtn.addEventListener("click", movedToDo);
+  span.innerText = spanText;
+  li.appendChild(span);
+  li.appendChild(delBtn);
+  li.appendChild(chkBtn);
+  li.id = liId;
+  finishedList.appendChild(li);
+
+  // const finisedObj = toDos[li.id - 1];
+  // console.log(finisedObj);
+
+  // pendingList.removeChild(li);
+  // const cleanToDos = toDos.filter(function (toDo) {
+  //   return toDo.id !== parseInt(li.id);
+  // });
+  // toDos = cleanToDos;
+  // saveToDos();
+  // chkToDos.push(finisedObj);
+  // toDos.splice(finisedObj);
+  // localStorage.setItem(CHECK_LS, JSON.stringify(chkToDos));
+  // localStorage.setItem(TODOS_LS, JSON.stringify(toDos));
 }
 
 function saveToDos() {
   localStorage.setItem(TODOS_LS, JSON.stringify(toDos));
 }
 
+function finishedToDo(text) {
+  /* finished 영역으로 데이터 옮기기 */
+}
+
 function pendingToDo(text) {
   //   console.log(text);
   const li = document.createElement("li");
   const delBtn = document.createElement("button");
+  const chkBtn = document.createElement("button");
   const span = document.createElement("span");
   const newId = toDos.length + 1;
   delBtn.innerText = "❌";
+  chkBtn.innerText = "✅";
   delBtn.addEventListener("click", deleteToDo);
+  chkBtn.addEventListener("click", movedToDo);
   span.innerText = text;
   li.appendChild(span);
   li.appendChild(delBtn);
+  li.appendChild(chkBtn);
   li.id = newId;
-  toDoList.appendChild(li);
+  pendingList.appendChild(li);
   const toDoObj = {
     text: text,
     id: newId,
