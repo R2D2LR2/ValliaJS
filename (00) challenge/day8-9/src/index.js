@@ -20,7 +20,19 @@ function deleteToDo(event) {
     return toDo.id !== parseInt(li.id);
   });
   toDos = cleanToDos;
-  saveToDos();
+  savePendingToDos();
+}
+
+function savePendingToDos() {
+  localStorage.setItem(TODOS_LS, JSON.stringify(toDos));
+}
+
+function saveFinishedToDos() {
+  localStorage.setItem(CHECK_LS, JSON.stringify(chkToDos));
+}
+
+function finishedToDo(text) {
+  /* finished 영역으로 데이터 옮기기 */
 }
 
 function movedToDo(event) {
@@ -43,28 +55,12 @@ function movedToDo(event) {
   li.appendChild(chkBtn);
   li.id = liId;
   finishedList.appendChild(li);
-
-  // const finisedObj = toDos[li.id - 1];
-  // console.log(finisedObj);
-
-  // pendingList.removeChild(li);
-  // const cleanToDos = toDos.filter(function (toDo) {
-  //   return toDo.id !== parseInt(li.id);
-  // });
-  // toDos = cleanToDos;
-  // saveToDos();
-  // chkToDos.push(finisedObj);
-  // toDos.splice(finisedObj);
-  // localStorage.setItem(CHECK_LS, JSON.stringify(chkToDos));
-  // localStorage.setItem(TODOS_LS, JSON.stringify(toDos));
-}
-
-function saveToDos() {
-  localStorage.setItem(TODOS_LS, JSON.stringify(toDos));
-}
-
-function finishedToDo(text) {
-  /* finished 영역으로 데이터 옮기기 */
+  const toDoObj = {
+    text: spanText,
+    id: liId,
+  };
+  chkToDos.push(toDoObj);
+  saveFinishedToDos();
 }
 
 function pendingToDo(text) {
@@ -89,7 +85,7 @@ function pendingToDo(text) {
     id: newId,
   };
   toDos.push(toDoObj);
-  saveToDos();
+  savePendingToDos();
 }
 
 function handleSubmit(event) {
@@ -99,7 +95,7 @@ function handleSubmit(event) {
   toDoInput.value = "";
 }
 
-function loadToDos() {
+function loadPendingToDos() {
   const loadedToDos = localStorage.getItem(TODOS_LS);
   if (loadedToDos !== null) {
     // console.log(loadedToDos);
@@ -111,8 +107,19 @@ function loadToDos() {
   }
 }
 
+function loadFinishedToDos() {
+  const loadedFinishedToDos = localStorage.getItem(CHECK_LS);
+  if (loadedFinishedToDos !== null) {
+    const parsedToDos = JSON.parse(loadedFinishedToDos);
+    console.log(parsedToDos);
+    // parsedToDos.forEach(function (toDo) {
+    //   pendingToDo(toDo.text);
+    // });
+  }
+}
+
 function init() {
-  loadToDos();
+  loadPendingToDos();
   toDoForm.addEventListener("submit", handleSubmit);
 }
 
