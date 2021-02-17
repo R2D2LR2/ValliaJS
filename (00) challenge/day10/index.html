@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Parcel Sandbox</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="./src/styles.css" />
+  </head>
+
+  <body>
+    <h1>Radom Number Game</h1>
+    <h3>
+      Generate a number between 0 and <span class="js-rangeMaxValue">10</span>
+    </h3>
+
+    <form class="js-form">
+      <input
+        type="range"
+        list="tickmarks"
+        min="0"
+        max="220"
+        value="10"
+        step="5"
+      />
+      <label>
+        Guess the number: <input type="number" min="0" max="10" value="0" />
+      </label>
+      <input type="submit" value="Play!" />
+    </form>
+
+    <div>
+      <p id="js-result" class="hiding">
+        You choose: <span class="js-chooseNum"> </span>, the machine choose:
+        <span class="js-machineNum"> </span>.
+      </p>
+      <p id="lost" class="hiding">You lost!</p>
+      <p id="won" class="hiding">You won!</p>
+    </div>
+
+    <datalist id="tickmarks">
+      <!-- <option value="0"></option> -->
+      <option value="50"></option>
+      <option value="100"></option>
+      <option value="150"></option>
+      <option value="200"></option>
+    </datalist>
+    <script src="src/index.js"></script>
+  </body>
+</html>
