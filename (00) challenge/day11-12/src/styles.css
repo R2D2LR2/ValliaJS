@@ -1,0 +1,24 @@
+body {
+  font-family: sans-serif;
+}
+button {
+  width: 50px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+}
+.container .row:nth-child(1) input {
+  width: 142px;
+  text-align: right;
+  outline: none;
+}
+
+.container .row:nth-child(5) button:first-child {
+  width: 100px;
+}
