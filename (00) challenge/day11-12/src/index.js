@@ -3,97 +3,87 @@
 // <⚠️ /DONT DELETE THIS ⚠️>
 
 const container = document.querySelector(".container"),
-  input = container.querySelector("input[type=text]"),
-  buttons = document.querySelectorAll("button");
+  input = container.querySelector(".row:first-child input"),
+  allBtn = document.querySelectorAll("button");
 
+let checkOperator = false;
+let checkNumber = true;
+let checkEquals = true;
 let result = "";
-let operCheck = false;
-let numberCheck = true;
-let equlasCheck = true;
 
-function init() {
-  buttons.forEach((button) => {
+function operator(op) {
+  if (checkOperator === true) {
+    checkOperator = false;
+    result += op;
+    checkNumber = false;
+  }
+}
+
+function reset() {
+  input.value = 0;
+  result = "";
+  checkOperator = false;
+  checkEquals = true;
+}
+
+function calc() {
+  if (input.value === "0") {
+    reset();
+  } else if (checkOperator === checkEquals) {
+    const final = eval(result);
+    input.value = final;
+    result = "";
+    checkOperator = false;
+    checkEquals = false;
+  } else {
+    reset();
+  }
+}
+
+function paintNumber(num) {
+  checkOperator = true;
+  const current = input.value;
+  if (checkEquals) {
+    if (checkNumber) {
+      input.value = current === "0" ? num : input.value + num;
+    } else {
+      input.value = num;
+      checkNumber = true;
+    }
+    result += num;
+  } else {
+    checkEquals = true;
+    input.value = num;
+    result = num;
+    console.log(result);
+  }
+}
+
+function clickedBtn() {
+  allBtn.forEach((button) => {
     button.addEventListener("click", () => {
-      switch (button.dataset.type) {
+      switch (button.dataset.op) {
         case "operator":
-          const oper = button.innerText;
-          operator(oper);
+          const op = button.innerText;
+          operator(op);
           break;
         case "cancle":
-          clear();
+          reset();
           break;
         case "equals":
           calc();
           break;
         default:
           const number = button.innerText;
-          displayNumber(number);
+          paintNumber(number);
           break;
       }
     });
   });
 }
 
-function displayNumber(number) {
-  operCheck = true;
-  const current = input.value;
-
-  //계산 끝난 후 초기화
-  if (equlasCheck) {
-    //연산자 눌렸을 시 계산기 값만 초기화
-    if (numberCheck) {
-      input.value = current === "0" ? number : input.value + number;
-    } else {
-      input.value = number;
-      numberCheck = true;
-    }
-    result += number;
-  } else {
-    equlasCheck = true;
-    input.value = number;
-    result = number;
-    console.log(result);
-  }
-}
-
-function calc() {
-  // 지속적으로 계산기 값 누르는 거 확인
-  if (input.value === "0") {
-    clear();
-  } else {
-    //마지막이 연산자로 끝나는 지 확인
-    if (!operCheck) {
-      alert("Calculation is unavailable because of operation.");
-    } else {
-      // 계속 눌렸을 때 변경
-      if (equlasCheck) {
-        const final = eval(result);
-        input.value = final;
-        result = "";
-        equlasCheck = false;
-        operCheck = false;
-      } else {
-        clear();
-      }
-    }
-  }
-}
-
-function operator(oper) {
-  if (!operCheck) {
-    alert("Operation Error.");
-  } else {
-    operCheck = false;
-    result += oper;
-    numberCheck = false;
-  }
-}
-
-function clear() {
-  input.value = 0;
-  result = "";
-  operCheck = false;
-  equlasCheck = true;
+function init() {
+  clickedBtn();
 }
 
 init();
