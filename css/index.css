@@ -26,7 +26,16 @@ body {
 .js-clock__column {
   visibility: hidden;
 }
+
+.todolist {
+  position: relative;
+}
+.js-toDoList {
+  position: absolute;
+  left: -45px;
+}
 .js-toDoForm input,
+.js-toDoList li,
 h4 {
   font-size: 30px;
 }
@@ -41,6 +50,10 @@ li {
   list-style-type: none;
 }
 
+li span:first-child {
+  cursor: pointer;
+}
+
 input {
   outline: none;
 }
@@ -53,7 +66,6 @@ input {
     opacity: 1;
   }
 }
-
 .bgImage {
   position: absolute;
   top: 0;
